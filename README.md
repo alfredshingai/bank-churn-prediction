@@ -145,7 +145,7 @@ Raw Excel (2 sheets)
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/bank-churn-prediction.git
+git clone https://github.com/alfredshingai/bank-churn-prediction.git
 cd bank-churn-prediction
 ```
 
