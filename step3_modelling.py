@@ -1,10 +1,9 @@
-# ============================================================
 # BANK CHURN PROJECT — Step 3: Feature Engineering & ML Modelling
-# ============================================================
+
 # Run after step1_data_cleaning.py
 # Input : bank_churn_clean.csv
 # Output: 3 evaluation charts + printed metrics
-# ============================================================
+
 
 import pandas as pd
 import numpy as np
@@ -22,13 +21,11 @@ from sklearn.metrics import (
 )
 from sklearn.pipeline import Pipeline
 
-# ── Load clean data ──────────────────────────────────────────
+# Load clean data 
 df = pd.read_csv("bank_churn_clean.csv")
 
 
-# ════════════════════════════════════════════════════════════
 # 1. Feature Engineering
-# ════════════════════════════════════════════════════════════
 
 # Ratio of account balance to estimated salary
 # → captures whether a customer is "parking" a lot of money
@@ -54,9 +51,7 @@ df[bool_cols] = df[bool_cols].astype(int)
 print("Dataset shape after feature engineering:", df.shape)
 
 
-# ════════════════════════════════════════════════════════════
 # 2. Train / Test Split
-# ════════════════════════════════════════════════════════════
 
 X = df.drop(columns=["Exited"])
 y = df["Exited"]
@@ -69,9 +64,8 @@ print(f"Train: {X_train.shape}  |  Test: {X_test.shape}")
 print(f"Churn rate — Train: {y_train.mean():.3f}  |  Test: {y_test.mean():.3f}")
 
 
-# ════════════════════════════════════════════════════════════
 # 3. Define Models
-# ════════════════════════════════════════════════════════════
+
 # class_weight='balanced' compensates for the 80/20 class imbalance
 # without needing to over/undersample the data.
 
@@ -95,9 +89,8 @@ models = {
 }
 
 
-# ════════════════════════════════════════════════════════════
+
 # 4. Train, Evaluate, Cross-Validate
-# ════════════════════════════════════════════════════════════
 
 results = {}
 print("\n" + "="*60)
@@ -135,10 +128,7 @@ for name, model in models.items():
 
 print("="*60)
 
-
-# ════════════════════════════════════════════════════════════
 # 5. Visualisations
-# ════════════════════════════════════════════════════════════
 
 BG     = "#F8F9FB"
 COLORS = ["#4C9BE8", "#E8A44C", "#5DBE7A"]
@@ -149,7 +139,7 @@ plt.rcParams.update({
     "axes.titleweight": "bold", "axes.titlesize": 13,
 })
 
-# ── Fig 5: ROC | PR curves | AUC comparison ─────────────────
+# Fig 5: ROC | PR curves | AUC comparison
 fig5, axes = plt.subplots(1, 3, figsize=(18, 6))
 fig5.patch.set_facecolor(BG)
 fig5.suptitle("Model Evaluation", fontsize=16, fontweight="bold")
@@ -201,7 +191,7 @@ fig5.savefig("model_fig5_evaluation.png", dpi=150, bbox_inches="tight")
 print("Saved → model_fig5_evaluation.png")
 
 
-# ── Fig 6: Confusion Matrices ────────────────────────────────
+# Fig 6: Confusion Matrices
 fig6, axes = plt.subplots(1, 3, figsize=(16, 5))
 fig6.patch.set_facecolor(BG)
 fig6.suptitle("Confusion Matrices", fontsize=16, fontweight="bold")
@@ -226,7 +216,7 @@ fig6.savefig("model_fig6_confusion.png", dpi=150, bbox_inches="tight")
 print("Saved → model_fig6_confusion.png")
 
 
-# ── Fig 7: Feature Importance (Gradient Boosting) ────────────
+# Fig 7: Feature Importance (Gradient Boosting)
 fig7, ax = plt.subplots(figsize=(10, 7))
 fig7.patch.set_facecolor(BG)
 ax.set_facecolor(BG)
