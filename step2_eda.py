@@ -1,10 +1,9 @@
-# ============================================================
 # BANK CHURN PROJECT — Step 2: EDA & Visualizations
-# ============================================================
+
 # Run after step1_data_cleaning.py
 # Input : bank_churn_clean.csv
 # Output: 4 PNG charts saved to working directory
-# ============================================================
+
 
 import pandas as pd
 import numpy as np
@@ -12,10 +11,10 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import seaborn as sns
 
-# ── Load clean data ──────────────────────────────────────────
+# Load clean data 
 df = pd.read_csv("bank_churn_clean.csv")
 
-# ── Quick summary ────────────────────────────────────────────
+# Quick summary
 print("Shape:", df.shape)
 print(f"\nOverall churn rate: {df['Exited'].mean()*100:.1f}%")
 print("\nChurn rate by Geography:")
@@ -25,7 +24,7 @@ print(df.groupby("Gender")["Exited"].mean().mul(100).round(1).astype(str) + "%")
 print("\nChurn rate by NumOfProducts:")
 print(df.groupby("NumOfProducts")["Exited"].mean().mul(100).round(1).astype(str) + "%")
 
-# ── Colour palette ───────────────────────────────────────────
+# Colour palette 
 STAY  = "#4C9BE8"   # blue  → stayed
 CHURN = "#E8604C"   # red   → churned
 BG    = "#F8F9FB"
@@ -48,9 +47,9 @@ palette   = {0: STAY, 1: CHURN}
 label_map = {0: "Stayed", 1: "Churned"}
 
 
-# ════════════════════════════════════════════════════════════
+
 # Figure 1 — Overview (2 × 2)
-# ════════════════════════════════════════════════════════════
+
 fig1, axes = plt.subplots(2, 2, figsize=(14, 10))
 fig1.patch.set_facecolor(BG)
 fig1.suptitle("Bank Churn — Overview", fontsize=16, fontweight="bold", y=1.01)
@@ -121,9 +120,9 @@ fig1.savefig("eda_fig1_overview.png", dpi=150, bbox_inches="tight")
 print("Saved → eda_fig1_overview.png")
 
 
-# ════════════════════════════════════════════════════════════
+
 # Figure 2 — Numeric Feature Distributions (2 × 3)
-# ════════════════════════════════════════════════════════════
+
 numeric_cols = ["CreditScore", "Age", "Balance", "EstimatedSalary", "Tenure"]
 fig2, axes = plt.subplots(2, 3, figsize=(16, 9))
 fig2.patch.set_facecolor(BG)
@@ -161,9 +160,9 @@ fig2.savefig("eda_fig2_distributions.png", dpi=150, bbox_inches="tight")
 print("Saved → eda_fig2_distributions.png")
 
 
-# ════════════════════════════════════════════════════════════
+
 # Figure 3 — Correlation Heatmap
-# ════════════════════════════════════════════════════════════
+
 fig3, ax = plt.subplots(figsize=(10, 8))
 fig3.patch.set_facecolor(BG)
 ax.set_facecolor(BG)
@@ -188,9 +187,9 @@ fig3.savefig("eda_fig3_correlation.png", dpi=150, bbox_inches="tight")
 print("Saved → eda_fig3_correlation.png")
 
 
-# ════════════════════════════════════════════════════════════
+
 # Figure 4 — Active Member & Credit Card Status
-# ════════════════════════════════════════════════════════════
+
 fig4, axes = plt.subplots(1, 2, figsize=(12, 5))
 fig4.patch.set_facecolor(BG)
 fig4.suptitle("Churn Rate by Membership & Credit Card Status",
