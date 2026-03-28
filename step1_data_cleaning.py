@@ -1,13 +1,12 @@
-# ============================================================
 # BANK CHURN PROJECT — Step 1: Data Cleaning & Merging
-# ============================================================
+
 # Dataset : Bank_Churn_Messy.xlsx (two sheets)
 # Target  : Exited (1 = churned, 0 = stayed)
-# ============================================================
+
 
 import pandas as pd
 
-# ── 1. Load both sheets ──────────────────────────────────────
+# 1. Load both sheets 
 customer_df = pd.read_excel("Bank_Churn_Messy.xlsx", sheet_name="Customer_Info")
 account_df  = pd.read_excel("Bank_Churn_Messy.xlsx", sheet_name="Account_Info")
 
@@ -15,7 +14,7 @@ print("Customer_Info shape:", customer_df.shape)   # (10001, 8)
 print("Account_Info shape :", account_df.shape)    # (10002, 7)
 
 
-# ── 2. Fix Account_Info ──────────────────────────────────────
+# 2. Fix Account_Info 
 
 # 2a. Remove fully duplicate rows (2 found during inspection)
 account_df = account_df.drop_duplicates()
@@ -39,7 +38,7 @@ account_df["HasCrCard"]      = account_df["HasCrCard"].map({"Yes": 1, "No": 0})
 account_df = account_df.drop(columns=["Tenure"])
 
 
-# ── 3. Fix Customer_Info ─────────────────────────────────────
+# 3. Fix Customer_Info 
 
 # 3a. Drop rows where Age is missing (only 3 rows — safe to remove)
 customer_df = customer_df.dropna(subset=["Age"])
@@ -59,14 +58,14 @@ customer_df["EstimatedSalary"] = (
 customer_df = customer_df.drop(columns=["Surname"])
 
 
-# ── 4. Merge the two sheets on CustomerId ────────────────────
+# 4. Merge the two sheets on CustomerId 
 df = pd.merge(customer_df, account_df, on="CustomerId", how="inner")
 
 # CustomerId is no longer needed after the join
 df = df.drop(columns=["CustomerId"])
 
 
-# ── 5. Sanity checks ─────────────────────────────────────────
+# 5. Sanity checks
 print("\n── Final dataset ──")
 print("Shape   :", df.shape)          # Expected: (9998, 11)
 print("Columns :", df.columns.tolist())
@@ -79,6 +78,6 @@ print(df.head())
 churn_rate = df["Exited"].mean() * 100
 print(f"\nChurn rate: {churn_rate:.1f}%")
 
-# ── 6. Save clean file for next steps ───────────────────────
+# 6. Save clean file for next steps
 df.to_csv("bank_churn_clean.csv", index=False)
 print("\nSaved → bank_churn_clean.csv")
